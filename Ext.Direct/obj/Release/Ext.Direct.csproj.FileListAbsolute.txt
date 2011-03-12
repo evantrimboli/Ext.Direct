@@ -1,0 +1,6 @@
+D:\Real\Ext.Direct\Ext.Direct\bin\Release\Ext.Direct.dll
+D:\Real\Ext.Direct\Ext.Direct\bin\Release\Ext.Direct.pdb
+D:\Real\Ext.Direct\Ext.Direct\bin\Release\Newtonsoft.Json.dll
+D:\Real\Ext.Direct\Ext.Direct\obj\Release\ResolveAssemblyReference.cache
+D:\Real\Ext.Direct\Ext.Direct\obj\Release\Ext.Direct.dll
+D:\Real\Ext.Direct\Ext.Direct\obj\Release\Ext.Direct.pdb
