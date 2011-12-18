@@ -49,7 +49,7 @@ namespace Ext.Direct
         internal static string GetName(MethodInfo mi)
         {
             return Utility.GetName(mi.GetCustomAttributes(typeof(DirectAliasAttribute), true), mi.Name);
-            
+
         }
 
         private static string GetName(object[] attrs, string defaultValue)

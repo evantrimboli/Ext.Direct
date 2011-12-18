@@ -9,7 +9,7 @@ using Newtonsoft.Json.Linq;
 namespace Ext.Direct
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public class DirectProvider
     {
@@ -260,7 +260,7 @@ namespace Ext.Direct
                 {
                     throw new DirectException("Parameters length does not match");
                 }
-            } 
+            }
             try
             {
                 this.SanitizeDates(method.Method, request);
