@@ -42,6 +42,12 @@ namespace Ext.Direct
             {
                 UTF8Encoding encoding = new UTF8Encoding();
                 string json = encoding.GetString(httpRequest.BinaryRead(httpRequest.TotalBytes));
+                /**************************************************************************************
+                 skygreen:解决bug:Self referencing loop
+                 参考:http://stackoverflow.com/questions/7397207/json-net-error-self-referencing-loop-detected-for-type
+                 **************************************************************************************/
+                /**
+                原本的代码
                 List<DirectRequest> requests = JsonConvert.DeserializeObject<List<DirectRequest>>(json);
                 if (requests.Count > 0)
                 {
@@ -59,10 +65,17 @@ namespace Ext.Direct
                     DirectRequest request = JsonConvert.DeserializeObject<DirectRequest>(json);
                     request.RequestData = JObject.Parse(json);
                     responses.Add(DirectProcessor.ProcessRequest(provider, request));
-                }
+                }*/
+                DirectRequest request  = JsonConvert.DeserializeObject<DirectRequest>(json);
+                request.RequestData = JObject.Parse(json);
+                responses.Add(DirectProcessor.ProcessRequest(provider, request));
             }
             DirectExecutionResponse response = new DirectExecutionResponse();
-            JsonSerializerSettings outputSettings = new JsonSerializerSettings() { DefaultValueHandling = DefaultValueHandling.Ignore };
+
+            JsonSerializerSettings outputSettings = new JsonSerializerSettings() { 
+                DefaultValueHandling = DefaultValueHandling.Ignore,
+                ReferenceLoopHandling =ReferenceLoopHandling.Ignore
+            };
             foreach (JsonConverter converter in converters)
             {
                 outputSettings.Converters.Add(converter);
