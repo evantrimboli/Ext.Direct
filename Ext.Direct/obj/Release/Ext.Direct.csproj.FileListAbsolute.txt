@@ -10,3 +10,9 @@ E:\Net\Ext.Direct\Ext.Direct\bin\Release\Ext.Direct.dll
 E:\Net\Ext.Direct\Ext.Direct\bin\Release\Ext.Direct.pdb
 E:\Net\Ext.Direct\Ext.Direct\bin\Release\Newtonsoft.Json.dll
 E:\Net\Ext.Direct\Ext.Direct\obj\Release\Ext.Direct.csprojResolveAssemblyReference.cache
+C:\Net\Ext.Direct\Ext.Direct\bin\Release\Ext.Direct.dll
+C:\Net\Ext.Direct\Ext.Direct\bin\Release\Ext.Direct.pdb
+C:\Net\Ext.Direct\Ext.Direct\bin\Release\Newtonsoft.Json.dll
+C:\Net\Ext.Direct\Ext.Direct\obj\Release\Ext.Direct.csprojResolveAssemblyReference.cache
+C:\Net\Ext.Direct\Ext.Direct\obj\Release\Ext.Direct.dll
+C:\Net\Ext.Direct\Ext.Direct\obj\Release\Ext.Direct.pdb
