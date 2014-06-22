@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json.Linq;
+using System.Text.RegularExpressions;
 
 namespace Ext.Direct
 {
@@ -42,16 +43,29 @@ namespace Ext.Direct
             {
                 UTF8Encoding encoding = new UTF8Encoding();
                 string json = encoding.GetString(httpRequest.BinaryRead(httpRequest.TotalBytes));
-                List<DirectRequest> requests = JsonConvert.DeserializeObject<List<DirectRequest>>(json);
-                if (requests.Count > 0)
+                /**************************************************************************************
+                 skygreen:解决bug:Self referencing loop
+                 参考:http://stackoverflow.com/questions/7397207/json-net-error-self-referencing-loop-detected-for-type
+                 **************************************************************************************/
+                if (substr_count(json,"data")>1)
                 {
-                    JArray raw = JArray.Parse(json);
-                    int i = 0;
-                    foreach (DirectRequest request in requests)
+                    List<DirectRequest> requests = JsonConvert.DeserializeObject<List<DirectRequest>>(json);
+                    if (requests.Count > 0)
                     {
-                        request.RequestData = (JObject) raw[i];
+                        JArray raw = JArray.Parse(json);
+                        int i = 0;
+                        foreach (DirectRequest request in requests)
+                        {
+                            request.RequestData = (JObject)raw[i];
+                            responses.Add(DirectProcessor.ProcessRequest(provider, request));
+                            ++i;
+                        }
+                    }
+                    else
+                    {
+                        DirectRequest request = JsonConvert.DeserializeObject<DirectRequest>(json);
+                        request.RequestData = JObject.Parse(json);
                         responses.Add(DirectProcessor.ProcessRequest(provider, request));
-                        ++i;
                     }
                 }
                 else
@@ -62,7 +76,11 @@ namespace Ext.Direct
                 }
             }
             DirectExecutionResponse response = new DirectExecutionResponse();
-            JsonSerializerSettings outputSettings = new JsonSerializerSettings() { DefaultValueHandling = DefaultValueHandling.Ignore };
+
+            JsonSerializerSettings outputSettings = new JsonSerializerSettings() { 
+                DefaultValueHandling = DefaultValueHandling.Ignore,
+                ReferenceLoopHandling =ReferenceLoopHandling.Ignore
+            };
             foreach (JsonConverter converter in converters)
             {
                 outputSettings.Converters.Add(converter);
@@ -78,6 +96,41 @@ namespace Ext.Direct
                 response.Data = String.Format("<html><body><textarea>{0}</textarea></body></html>", outputJson.Replace("&quot;", "\\&quot;"));
             }
             return response;
+        }
+
+        /// <summary>
+        ///  计算字符串出现的次数
+        /// </summary>
+        /// <param name="haystack">必需。规定要检查的字符串。</param>
+        /// <param name="needle">要搜索的字符串</param>
+        /// <param name="type">查找方式，默认0:正则表达式方式,这种方式如果子字符串有特殊符号不推荐用；其他:标准的查找子字符串的方式</param>
+        /// <returns></returns>
+        public static int substr_count(string haystack, string needle,int type=0)
+        {
+            
+            int count = 0;
+            if (type == 0)
+            {
+                if (haystack != String.Empty && needle != String.Empty)
+                {
+                    MatchCollection mc = Regex.Matches(haystack, needle);
+                    count = mc.Count;
+                }
+            }
+            else
+            {
+                for (int i = 0; i < haystack.Length; i++)
+                {
+                    for (int j = 1; j <= (haystack.Length - i); j++)
+                    {
+                        if (haystack.Substring(i, j) == needle)
+                        {
+                            count++;
+                        }
+                    }
+                }
+            }
+            return count;
         }
 
         private static DirectResponse ProcessRequest(DirectProvider provider, DirectRequest request)

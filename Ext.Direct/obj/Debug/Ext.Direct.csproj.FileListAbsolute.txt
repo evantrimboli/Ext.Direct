@@ -4,3 +4,9 @@ D:\Real\Ext.Direct\Ext.Direct\bin\Debug\Newtonsoft.Json.dll
 D:\Real\Ext.Direct\Ext.Direct\obj\Debug\ResolveAssemblyReference.cache
 D:\Real\Ext.Direct\Ext.Direct\obj\Debug\Ext.Direct.dll
 D:\Real\Ext.Direct\Ext.Direct\obj\Debug\Ext.Direct.pdb
+C:\Net\Ext.Direct\Ext.Direct\bin\Debug\Ext.Direct.dll
+C:\Net\Ext.Direct\Ext.Direct\bin\Debug\Ext.Direct.pdb
+C:\Net\Ext.Direct\Ext.Direct\bin\Debug\Newtonsoft.Json.dll
+C:\Net\Ext.Direct\Ext.Direct\obj\Debug\Ext.Direct.csprojResolveAssemblyReference.cache
+C:\Net\Ext.Direct\Ext.Direct\obj\Debug\Ext.Direct.dll
+C:\Net\Ext.Direct\Ext.Direct\obj\Debug\Ext.Direct.pdb
